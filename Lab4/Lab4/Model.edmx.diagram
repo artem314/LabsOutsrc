@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="129105a5d91b4086af390085351d3aa2" Name="Diagram1">
+        <EntityTypeShape EntityType="ProductsDbModel.Customers" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductsDbModel.Groups" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductsDbModel.Products" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductsDbModel.Purchase" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductsDbModel.Sales" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductsDbModel.Suppliers" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="ProductsDbModel.FK_Customers_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Products_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Purchase_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Sales_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Purchase_ToTable_2" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Sales_ToTable_2" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Purchase_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductsDbModel.FK_Sales_ToTable" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

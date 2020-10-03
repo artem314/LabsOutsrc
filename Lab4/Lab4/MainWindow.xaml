@@ -1,0 +1,64 @@
+﻿<Window x:Class="Lab4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab4"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="522.473" Width="689.885">
+
+    <StackPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Command="{Binding ConnectCommand}" Header="Подключиться" Height="28" />
+            <MenuItem Command="{Binding SaveCommand}" Header="Сохранить" />
+            <MenuItem Command="{Binding CloseCommand}" Header="Выйти" />
+        </Menu>
+
+        <Grid Margin="0,0,0,0" Height="492">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.75*"/>
+                <ColumnDefinition Width="0.25*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Margin="10" Orientation="Vertical"  Grid.Column="0">
+
+                <TextBox Text="{Binding queryText}" TextWrapping="Wrap" Margin="10,5" Height="72"/>
+                <DockPanel Height="42" Margin="10,5">
+                    <TextBox Text="{Binding queryCondition}"  TextWrapping="Wrap" Width="307"/>
+                    <DatePicker SelectedDate="{Binding SelectedDate}"/>
+                </DockPanel>
+                <DataGrid SelectedItem="{Binding SelectedItemInTable}" ItemsSource="{Binding TableData, UpdateSourceTrigger=PropertyChanged}" Height="236" Margin="10,10,10,0"/>
+                <Button Command="{Binding GetFirstCommand}" Content="Первая запись" Margin="10,10,300,0"/>
+                <Button Command="{Binding GetLastCommand}" Content="Последняя запись" Margin="10,10,300,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10,10">
+                <Button Command="{Binding ProductsByGroupsCommand}"  VerticalAlignment="Top" Margin="0,5,0,5" >
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Количества товаров по группам"/></TextBlock>
+                </Button>
+                <Button Command="{Binding SumBySuppliersCommand}"  VerticalAlignment="Top" Margin="0,5,0,5" >
+                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Суммы закупок по поставщикам"/></TextBlock>
+                </Button>
+
+                <Button Command="{Binding GetSumBySuppliersForDateCommand}"  VerticalAlignment="Top" Grid.Column="1"  Margin="0,5,0,5" >
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Сумма закупок по поставщикам и датам"/></TextBlock>
+                </Button>
+     
+
+                <Button Command="{Binding GetSumByCustomersCommand}" VerticalAlignment="Top" Grid.Column="1"  Margin="0,5,0,5" >
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Суммы продаж по покупателям"/></TextBlock>
+                </Button>
+
+                <Button Command="{Binding GetMaxSalesByCustomerCommand}"  VerticalAlignment="Top" Grid.Column="1" Margin="0,5,0,5" >
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Максимальная продажа по покупателю"/></TextBlock>
+                </Button>
+
+
+            </StackPanel>
+
+        </Grid>
+
+    </StackPanel>
+</Window>
