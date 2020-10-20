@@ -58,40 +58,47 @@ namespace Lab4
         /// <returns>Коллекцию объектов ResProductsByGroups<see cref="ResProductsByGroups"/></returns>
         public static IEnumerable<object> getProductsByGroups(string GroupName)
         {
-            try
+            if(db!=null)
             {
-                string query = "SELECT  Groups.product_group as groupName, SUM(Sales.amount + Purchase.amount) as totalAmount " +
-                    "FROM Groups INNER JOIN Sales ON Groups.id = Sales.group_id " +
-                    "INNER JOIN Purchase ON Groups.id = Purchase.group_id " +
-                    "GROUP BY Groups.product_group " +
-                    "ORDER BY totalAmount; ";
-
-                var result = new List<ResProductsByGroups>();
-                if (!String.IsNullOrEmpty(GroupName))
+                try
                 {
-                    query = "SELECT  Groups.product_group as groupName, SUM(Sales.amount + Purchase.amount) as totalAmount " +
-                   "FROM Groups INNER JOIN Sales ON Groups.id = Sales.group_id " +
-                   "INNER JOIN Purchase ON Groups.id = Purchase.group_id " +
-                   "WHERE Groups.product_group = @Group_Name" +
-                   "GROUP BY Groups.product_group " +
-                   "ORDER BY totalAmount; ";
+                    string query = "SELECT  Groups.product_group as groupName, SUM(Sales.amount + Purchase.amount) as totalAmount " +
+                        "FROM Groups INNER JOIN Sales ON Groups.id = Sales.group_id " +
+                        "INNER JOIN Purchase ON Groups.id = Purchase.group_id " +
+                        "GROUP BY Groups.product_group " +
+                        "ORDER BY totalAmount; ";
 
-                    result = db.Database.SqlQuery<ResProductsByGroups>(query,
-                        new SqlParameter("@Group_Name", GroupName))
-                        .ToList();
+                    var result = new List<ResProductsByGroups>();
+                    if (!String.IsNullOrEmpty(GroupName))
+                    {
+                        query = "SELECT  Groups.product_group as groupName, SUM(Sales.amount + Purchase.amount) as totalAmount " +
+                       "FROM Groups INNER JOIN Sales ON Groups.id = Sales.group_id " +
+                       "INNER JOIN Purchase ON Groups.id = Purchase.group_id " +
+                       "WHERE Groups.product_group = @Group_Name" +
+                       "GROUP BY Groups.product_group " +
+                       "ORDER BY totalAmount; ";
+
+                        result = db.Database.SqlQuery<ResProductsByGroups>(query,
+                            new SqlParameter("@Group_Name", GroupName))
+                            .ToList();
+                        CurrentQuery = query;
+                        return result;
+                    }
+
                     CurrentQuery = query;
+                    result = db.Database.SqlQuery<ResProductsByGroups>(query).ToList();
                     return result;
                 }
-
-                CurrentQuery = query;
-                result = db.Database.SqlQuery<ResProductsByGroups>(query).ToList();
-                return result;
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                return new List<object>();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Необходимо подключить БД");
             }
-            return new List<object>();
 
         }
 

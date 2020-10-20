@@ -38,7 +38,7 @@ namespace Lab4
                   {
                       using (StreamWriter fs = File.CreateText("TableDump.json"))
                       {
-                         var json =  JsonSerializer.Serialize<object>(TableData);
+                          var json = JsonSerializer.Serialize<object>(TableData);
                           fs.Write(json);
                       }
                   }));
@@ -183,7 +183,9 @@ namespace Lab4
                 return _getFirstCommand ??
                   (_getFirstCommand = new RelayCommand(obj =>
                   {
-                      SelectedItemInTable = TableData.First();
+                      if (TableData != null)
+                          if (TableData.Count() != 0)
+                              SelectedItemInTable = TableData.First();
                   }));
             }
         }
@@ -208,7 +210,9 @@ namespace Lab4
                 return _getLastCommand ??
                   (_getLastCommand = new RelayCommand(obj =>
                   {
-                      SelectedItemInTable = TableData.Last();
+                      if (TableData != null)
+                          if (TableData.Count() != 0)
+                              SelectedItemInTable = TableData.Last();
                   }));
             }
         }
