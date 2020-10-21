@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище universityDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище universityDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="department">
           <Key>
             <PropertyRef Name="Id" />
@@ -40,14 +40,61 @@
           <Property Name="admission_year" Type="date" />
           <Property Name="rating" Type="tinyint" />
         </EntityType>
+        <Association Name="FK_groups_ToTable">
+          <End Role="department" Type="Self.department" Multiplicity="0..1" />
+          <End Role="groups" Type="Self.groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_groups_ToTable_1">
+          <End Role="specialty" Type="Self.specialty" Multiplicity="0..1" />
+          <End Role="groups" Type="Self.groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="specialty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="specialty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_students_ToTable">
+          <End Role="groups" Type="Self.groups" Multiplicity="0..1" />
+          <End Role="students" Type="Self.students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="students">
+              <PropertyRef Name="group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище universityDBModelContainer">
           <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="groups" EntityType="Self.groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="specialty" EntityType="Self.specialty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="students" EntityType="Self.students" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_groups_ToTable" Association="Self.FK_groups_ToTable">
+            <End Role="department" EntitySet="department" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_groups_ToTable_1" Association="Self.FK_groups_ToTable_1">
+            <End Role="specialty" EntitySet="specialty" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_students_ToTable" Association="Self.FK_students_ToTable">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="students" EntitySet="students" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="universityDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -59,6 +106,7 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="head" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="groups" Relationship="universityDBModel.FK_groups_ToTable" FromRole="department" ToRole="groups" />
         </EntityType>
         <EntityType Name="groups">
           <Key>
@@ -67,6 +115,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="specialty" Type="Int32" />
           <Property Name="department" Type="Int32" />
+          <NavigationProperty Name="department1" Relationship="universityDBModel.FK_groups_ToTable" FromRole="groups" ToRole="department" />
+          <NavigationProperty Name="specialty1" Relationship="universityDBModel.FK_groups_ToTable_1" FromRole="groups" ToRole="specialty" />
+          <NavigationProperty Name="students" Relationship="universityDBModel.FK_students_ToTable" FromRole="groups" ToRole="students" />
         </EntityType>
         <EntityType Name="specialty">
           <Key>
@@ -75,6 +126,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="groups" Relationship="universityDBModel.FK_groups_ToTable_1" FromRole="specialty" ToRole="groups" />
         </EntityType>
         <EntityType Name="students">
           <Key>
@@ -85,13 +137,62 @@
           <Property Name="group" Type="Int32" />
           <Property Name="admission_year" Type="DateTime" Precision="0" />
           <Property Name="rating" Type="Byte" />
+          <NavigationProperty Name="groups" Relationship="universityDBModel.FK_students_ToTable" FromRole="students" ToRole="groups" />
         </EntityType>
         <EntityContainer Name="universityDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="department" EntityType="Self.department" />
           <EntitySet Name="groups" EntityType="Self.groups" />
           <EntitySet Name="specialty" EntityType="Self.specialty" />
           <EntitySet Name="students" EntityType="Self.students" />
+          <AssociationSet Name="FK_groups_ToTable" Association="universityDBModel.FK_groups_ToTable">
+            <End Role="department" EntitySet="department" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_groups_ToTable_1" Association="universityDBModel.FK_groups_ToTable_1">
+            <End Role="specialty" EntitySet="specialty" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_students_ToTable" Association="universityDBModel.FK_students_ToTable">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="students" EntitySet="students" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_groups_ToTable">
+          <End Type="universityDBModel.department" Role="department" Multiplicity="0..1" />
+          <End Type="universityDBModel.groups" Role="groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_groups_ToTable_1">
+          <End Type="universityDBModel.specialty" Role="specialty" Multiplicity="0..1" />
+          <End Type="universityDBModel.groups" Role="groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="specialty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="specialty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_students_ToTable">
+          <End Type="universityDBModel.groups" Role="groups" Multiplicity="0..1" />
+          <End Type="universityDBModel.students" Role="students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="students">
+              <PropertyRef Name="group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

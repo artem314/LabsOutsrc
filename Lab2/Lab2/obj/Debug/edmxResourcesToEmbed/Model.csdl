@@ -8,6 +8,7 @@
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="faculty" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="head" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="groups" Relationship="universityDBModel.FK_groups_ToTable" FromRole="department" ToRole="groups" />
   </EntityType>
   <EntityType Name="groups">
     <Key>
@@ -16,6 +17,9 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="specialty" Type="Int32" />
     <Property Name="department" Type="Int32" />
+    <NavigationProperty Name="department1" Relationship="universityDBModel.FK_groups_ToTable" FromRole="groups" ToRole="department" />
+    <NavigationProperty Name="specialty1" Relationship="universityDBModel.FK_groups_ToTable_1" FromRole="groups" ToRole="specialty" />
+    <NavigationProperty Name="students" Relationship="universityDBModel.FK_students_ToTable" FromRole="groups" ToRole="students" />
   </EntityType>
   <EntityType Name="specialty">
     <Key>
@@ -24,6 +28,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="groups" Relationship="universityDBModel.FK_groups_ToTable_1" FromRole="specialty" ToRole="groups" />
   </EntityType>
   <EntityType Name="students">
     <Key>
@@ -34,11 +39,60 @@
     <Property Name="group" Type="Int32" />
     <Property Name="admission_year" Type="DateTime" Precision="0" />
     <Property Name="rating" Type="Byte" />
+    <NavigationProperty Name="groups" Relationship="universityDBModel.FK_students_ToTable" FromRole="students" ToRole="groups" />
   </EntityType>
   <EntityContainer Name="universityDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="department" EntityType="Self.department" />
     <EntitySet Name="groups" EntityType="Self.groups" />
     <EntitySet Name="specialty" EntityType="Self.specialty" />
     <EntitySet Name="students" EntityType="Self.students" />
+    <AssociationSet Name="FK_groups_ToTable" Association="universityDBModel.FK_groups_ToTable">
+      <End Role="department" EntitySet="department" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groups_ToTable_1" Association="universityDBModel.FK_groups_ToTable_1">
+      <End Role="specialty" EntitySet="specialty" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_students_ToTable" Association="universityDBModel.FK_students_ToTable">
+      <End Role="groups" EntitySet="groups" />
+      <End Role="students" EntitySet="students" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_groups_ToTable">
+    <End Type="universityDBModel.department" Role="department" Multiplicity="0..1" />
+    <End Type="universityDBModel.groups" Role="groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="department" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groups_ToTable_1">
+    <End Type="universityDBModel.specialty" Role="specialty" Multiplicity="0..1" />
+    <End Type="universityDBModel.groups" Role="groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="specialty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="specialty" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_students_ToTable">
+    <End Type="universityDBModel.groups" Role="groups" Multiplicity="0..1" />
+    <End Type="universityDBModel.students" Role="students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="students">
+        <PropertyRef Name="group" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

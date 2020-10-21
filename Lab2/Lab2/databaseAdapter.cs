@@ -25,10 +25,8 @@ namespace Lab2
         {
             if (_instance == null)
             {
-                string connectionString;
-                string workingDirectory = Environment.CurrentDirectory;
-                string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-                connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + projectDirectory + "\\universityDB.mdf;Integrated Security=True;Connect Timeout=30";
+                string bdPath = Application.StartupPath; ;
+                string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={bdPath}\\universityDB.mdf;Integrated Security=True;Connect Timeout=30";
 
                 try
                 {
@@ -40,7 +38,7 @@ namespace Lab2
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Ошибка подключения к бд \n" + ex.Message);
                     return null;
                 }
             }
@@ -75,7 +73,7 @@ namespace Lab2
                 {
                     string query = "SELECT COLUMN_NAME " +
                         "FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @table_name";
-                    columnNames = db.Database.SqlQuery<string>(query, 
+                    columnNames = db.Database.SqlQuery<string>(query,
                         new SqlParameter("@table_name", tableName))
                         .ToArray();
                 }

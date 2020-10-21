@@ -14,8 +14,17 @@ namespace Lab2
     
     public partial class specialty
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public specialty()
+        {
+            this.groups = new HashSet<groups>();
+        }
+    
         public int Id { get; set; }
         public string name { get; set; }
         public string branch { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<groups> groups { get; set; }
     }
 }

@@ -7,8 +7,11 @@
       <Diagram DiagramId="fa255a93321a4da6a347a61be927f38c" Name="Diagram1">
         <EntityTypeShape EntityType="universityDBModel.department" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="universityDBModel.groups" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="universityDBModel.specialty" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="universityDBModel.students" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="universityDBModel.specialty" Width="1.5" PointX="1.375" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="universityDBModel.students" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="universityDBModel.FK_groups_ToTable" />
+        <AssociationConnector Association="universityDBModel.FK_groups_ToTable_1" />
+        <AssociationConnector Association="universityDBModel.FK_students_ToTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -30,7 +30,7 @@ namespace Lab2
 
         private void Tables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string currentTable = Tables.SelectedItem.ToString();
+           string currentTable = Tables.SelectedItem.ToString();
             Columns.Items.Clear();
             Columns.Items.AddRange(databaseAdapter.getColumnNames(currentTable));
 
@@ -213,6 +213,43 @@ namespace Lab2
                 onClose();
             }
             this.Close();
+        }
+
+        private void Tables_Leave(object sender, EventArgs e)
+        {
+            if( Tables.Text!="")
+            {
+
+            }
+        }
+
+        private void Columns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(!String.IsNullOrEmpty(Tables.Text))
+            {
+                Tables.Items.Add(Tables.Text);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(Columns.Text))
+            {
+                Tables.Items.Add(Columns.Text);
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(Queries.Text))
+            {
+                Tables.Items.Add(Queries.Text);
+            }
         }
     }
 }

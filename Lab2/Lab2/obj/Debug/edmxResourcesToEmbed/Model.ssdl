@@ -35,10 +35,58 @@
     <Property Name="admission_year" Type="date" />
     <Property Name="rating" Type="tinyint" />
   </EntityType>
+  <Association Name="FK_groups_ToTable">
+    <End Role="department" Type="Self.department" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="department" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_groups_ToTable_1">
+    <End Role="specialty" Type="Self.specialty" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="specialty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="specialty" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_students_ToTable">
+    <End Role="groups" Type="Self.groups" Multiplicity="0..1" />
+    <End Role="students" Type="Self.students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="students">
+        <PropertyRef Name="group" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="Хранилище universityDBModelContainer">
     <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="groups" EntityType="Self.groups" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="specialty" EntityType="Self.specialty" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="students" EntityType="Self.students" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_groups_ToTable" Association="Self.FK_groups_ToTable">
+      <End Role="department" EntitySet="department" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_groups_ToTable_1" Association="Self.FK_groups_ToTable_1">
+      <End Role="specialty" EntitySet="specialty" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_students_ToTable" Association="Self.FK_students_ToTable">
+      <End Role="groups" EntitySet="groups" />
+      <End Role="students" EntitySet="students" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

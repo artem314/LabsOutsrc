@@ -19,5 +19,7 @@ namespace Lab2
         public Nullable<int> group { get; set; }
         public Nullable<System.DateTime> admission_year { get; set; }
         public Nullable<byte> rating { get; set; }
+    
+        public virtual groups groups { get; set; }
     }
 }

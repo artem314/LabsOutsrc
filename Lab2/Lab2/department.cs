@@ -14,9 +14,18 @@ namespace Lab2
     
     public partial class department
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public department()
+        {
+            this.groups = new HashSet<groups>();
+        }
+    
         public int Id { get; set; }
         public string name { get; set; }
         public string faculty { get; set; }
         public string head { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<groups> groups { get; set; }
     }
 }
