@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,12 +41,16 @@ namespace Lab2
 
             int currentQueryType = Queries.SelectedIndex;
             string finalQuery = "";
-            string currentTable = "";
-            if (Tables.SelectedIndex>=0)
-            currentTable = Tables.SelectedItem.ToString();
-            int columnID = Columns.SelectedIndex;
-            string currentColumn = "";
+            string currentTable = "table_name";
 
+            if (Tables.SelectedIndex >= 0)
+            {
+                currentTable = Tables.SelectedItem.ToString();
+            }
+
+            int columnID = Columns.SelectedIndex;
+
+            string currentColumn = "column_name";
             if (columnID >= 0)
             {
                 currentColumn = Columns.SelectedItem.ToString();
@@ -68,25 +73,23 @@ namespace Lab2
                     finalQuery = $"SELECT {cols} FROM {currentTable}";
                     break;
                 case 3:
-
-                    string columnsToInsert = " (";
-                    string columnsDefValues = " (";
+                    string columnsDefValues = "";
 
                     foreach (object item in Columns.Items)
                     {
-                        columnsToInsert += item.ToString() + ",";
-                        columnsDefValues += "\'" + item.ToString() + "\'" + ",";
+                        columnsDefValues += $"'{item.ToString()}' ,";
                     }
-                    columnsToInsert += ") ";
-                    columnsDefValues += ") ";
 
-                    finalQuery = "INSERT INTO " + currentTable + columnsToInsert + "VALUES" + columnsDefValues + ";";
+                    finalQuery = $"INSERT INTO {currentTable} \n" +
+                        $"VALUES ({columnsDefValues});";
                     break;
                 case 4:
                     string deleteCondition = "";
+
                     if (columnID >= 0)
-                        deleteCondition = " WHERE " + currentColumn + " = condition";
-                    finalQuery = "DELETE FROM " + currentTable + deleteCondition;
+                        deleteCondition = $"WHERE {currentColumn} = condition";
+                    finalQuery = $"DELETE FROM {currentTable} {deleteCondition};";
+
                     break;
                 case 5:
 
@@ -94,18 +97,19 @@ namespace Lab2
                     string whereCondtion = "";
                     if (columnID >= 0)
                     {
-                        whereCondtion = $"WHERE {currentColumn} = '{currentColumn}'";
+                        whereCondtion = "WHERE 'condition'";
+                        //whereCondtion = $"WHERE {currentColumn} = '{currentColumn}'";
                         setCondtion = $"{currentColumn} = '{currentColumn}'";
                     }
                     else
                     {
-                        whereCondtion = "WHERE 'condition'";
+
                         foreach (object item in Columns.Items)
                         {
-                            setCondtion += $"{item.ToString()} = '{item.ToString()}', ";
+                            setCondtion += $"{item.ToString()} = '{item.ToString()}',";
                         }
                     }
-                    finalQuery = $"UPDATE {currentTable} SET {setCondtion} {whereCondtion}";
+                    finalQuery = $"UPDATE {currentTable} SET {setCondtion} {whereCondtion};";
                     break;
             }
 
@@ -115,6 +119,100 @@ namespace Lab2
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Visible = true;
+        }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(textBox1.Text))
+            {
+                saveQuery();
+            }
+        }
+
+        private void saveQuery()
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*";
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.FileName = "SQLquery";
+                saveFileDialog.Title = "Сохранить запрос";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string queryToSave = textBox1.Text;
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName, false, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine(queryToSave);
+                        MessageBox.Show("Запрос сохранен");
+                    }
+                }
+            }
+        }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Visible = true;
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "C:\\";
+                openFileDialog.Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+
+                    filePath = openFileDialog.FileName;
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                    textBox1.Text = fileContent;
+                }
+            }
+        }
+
+        private void onClose()
+        {
+            const string message = "Вы хотите сохранить запрос?";
+            const string caption = "Сохранить запрос?";
+            var result = MessageBox.Show(message, caption,
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                saveQuery();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(textBox1.Text))
+            {
+                onClose();
+            }
+        }
+
+        private void выйтиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(textBox1.Text))
+            {
+                onClose();
+            }
+            this.Close();
         }
     }
 }
