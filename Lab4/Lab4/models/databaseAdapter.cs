@@ -58,7 +58,7 @@ namespace Lab4
         /// <returns>Коллекцию объектов ResProductsByGroups<see cref="ResProductsByGroups"/></returns>
         public static IEnumerable<object> getProductsByGroups(string GroupName)
         {
-            if(db!=null)
+            if (db != null)
             {
                 try
                 {
@@ -98,6 +98,7 @@ namespace Lab4
             else
             {
                 MessageBox.Show("Необходимо подключить БД");
+                return new List<object>();
             }
 
         }
@@ -167,7 +168,7 @@ namespace Lab4
                     MessageBox.Show("Пожалуйста, введите два параметра ФИО и дату");
                     return new List<object>();
                 }
-           
+
                 string query = "SELECT Suppliers.FIO as FIO,Purchase.date as date, Purchase.sum as sum " +
                     "FROM Purchase INNER JOIN Suppliers ON Purchase.supplier_id = Suppliers.Id " +
                     "WHERE FIO = @FIO AND Purchase.date <= @date ";
@@ -261,9 +262,9 @@ namespace Lab4
                     "WHERE Customers.FIO = @FIO " +
                     "GROUP BY FIO; ";
 
-                result = db.Database.SqlQuery<ResMaxSalesByCustomer>(query,
-                new SqlParameter("@FIO", FIO))
-                .ToList();
+                    result = db.Database.SqlQuery<ResMaxSalesByCustomer>(query,
+                    new SqlParameter("@FIO", FIO))
+                    .ToList();
 
                     CurrentQuery = query;
                     return result;
@@ -283,7 +284,7 @@ namespace Lab4
 
         public static void CloseConnection()
         {
-            if(_instance!=null)
+            if (_instance != null)
             {
                 db.Database.Connection.Close();
                 _instance = null;
@@ -291,7 +292,7 @@ namespace Lab4
         }
         public static string getCurrentQuery()
         {
-            if (!String.IsNullOrEmpty(CurrentQuery) && _instance!=null)
+            if (!String.IsNullOrEmpty(CurrentQuery) && _instance != null)
                 return CurrentQuery;
             return "";
         }

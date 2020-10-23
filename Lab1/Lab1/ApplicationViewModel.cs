@@ -163,7 +163,7 @@ namespace Lab1
                       && String.IsNullOrEmpty(contact.mobile)
                       && String.IsNullOrEmpty(contact.address))
                       {
-                          MessageBox.Show("Все поля, касающиеся телефона, адреса или электронный адрес не могут быть пустыми одновременно");
+                          MessageBox.Show("Все поля, касающиеся телефона, адреса или электронного адреса не могут быть пустыми одновременно");
                           return;
                       }
 
@@ -362,17 +362,27 @@ namespace Lab1
                 SelectedContact = new Contacts();
 
                 StatusString = "";
-                db = new notebookDBEntities1();
-                db.Contacts.Load();
 
-                ContactsList = db.Contacts.Local.ToBindingList();
-                backupContactsList = new ObservableCollection<Contacts>(ContactsList);
+                string bdPath = System.AppDomain.CurrentDomain.BaseDirectory;
+                string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={bdPath}notebookDB.mdf;Integrated Security=True;Connect Timeout=30";
 
-                Categories = new ObservableCollection<string>();
-                Categories.Add("кат1");
-                Categories.Add("кат2");
-                Categories.Add("кат3");
-                Categories.Add("кат4");
+                try
+                {
+                    db = new notebookDBEntities1();
+                    db.Database.Connection.ConnectionString = connectionString;
+                    db.Contacts.Load();
+                    ContactsList = db.Contacts.Local.ToBindingList();
+                    backupContactsList = new ObservableCollection<Contacts>(ContactsList);
+                    Categories = new ObservableCollection<string>();
+                    Categories.Add("кат1");
+                    Categories.Add("кат2");
+                    Categories.Add("кат3");
+                    Categories.Add("кат4");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             catch (Exception ex)
             {
