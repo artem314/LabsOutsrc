@@ -39,14 +39,13 @@ namespace Lab1
             {
                 _searchString = value;
 
-                if(searchString=="")
+                if (searchString == "")
                 {
                     ContactsList = backupContactsList;
                 }
 
-                if(searchString!="")
+                if (searchString != "")
                 {
-                    
                     ContactsList = backupContactsList.Where(x =>
                    (x.FIO.IndexOf(searchString) != -1)
                     || (x.mobile.IndexOf(searchString) != -1)
@@ -127,6 +126,20 @@ namespace Lab1
             }
         }
 
+        private RelayCommand _clearInputCommand { get; set; }
+
+        public RelayCommand clearInputCommand
+        {
+            get
+            {
+                return _clearInputCommand ??
+                  (_clearInputCommand = new RelayCommand(obj =>
+                  {
+                      SelectedContact = new Contacts();
+                  }));
+            }
+        }
+
         private RelayCommand _addContactCommand { get; set; }
 
         public RelayCommand addContactCommand
@@ -138,6 +151,22 @@ namespace Lab1
                   {
                       Contacts contact = new Contacts();
                       contact = SelectedContact;
+
+                      if (String.IsNullOrEmpty(contact.FIO))
+                      {
+                          MessageBox.Show("Необходимо ввести Контактные данные");
+                          return;
+                      }
+
+                      if (String.IsNullOrEmpty(contact.email)
+                      && String.IsNullOrEmpty(contact.phone)
+                      && String.IsNullOrEmpty(contact.mobile)
+                      && String.IsNullOrEmpty(contact.address))
+                      {
+                          MessageBox.Show("Все поля, касающиеся телефона, адреса или электронный адрес не могут быть пустыми одновременно");
+                          return;
+                      }
+
                       try
                       {
                           if (selectedCategory != null)

@@ -36,7 +36,7 @@
           <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="birthday" Type="DateTime" Precision="0" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="category" Type="String" />
+          <Property Name="category" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="notes" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
