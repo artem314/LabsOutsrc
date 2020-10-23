@@ -40,10 +40,10 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.Columns = new System.Windows.Forms.ComboBox();
             this.Tables = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -54,9 +54,9 @@
             this.Queries.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Queries.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Queries.FormattingEnabled = true;
-            this.Queries.Location = new System.Drawing.Point(285, 3);
+            this.Queries.Location = new System.Drawing.Point(287, 3);
             this.Queries.Name = "Queries";
-            this.Queries.Size = new System.Drawing.Size(138, 32);
+            this.Queries.Size = new System.Drawing.Size(136, 32);
             this.Queries.TabIndex = 2;
             // 
             // textBox1
@@ -162,9 +162,9 @@
             this.Columns.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Columns.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Columns.FormattingEnabled = true;
-            this.Columns.Location = new System.Drawing.Point(144, 3);
+            this.Columns.Location = new System.Drawing.Point(145, 3);
             this.Columns.Name = "Columns";
-            this.Columns.Size = new System.Drawing.Size(135, 32);
+            this.Columns.Size = new System.Drawing.Size(136, 32);
             this.Columns.Sorted = true;
             this.Columns.TabIndex = 7;
             // 
@@ -174,10 +174,43 @@
             this.Tables.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Tables.Location = new System.Drawing.Point(3, 3);
             this.Tables.Name = "Tables";
-            this.Tables.Size = new System.Drawing.Size(135, 32);
+            this.Tables.Size = new System.Drawing.Size(136, 32);
             this.Tables.Sorted = true;
             this.Tables.TabIndex = 0;
             this.Tables.Leave += new System.EventHandler(this.Tables_Leave);
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Location = new System.Drawing.Point(3, 43);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(136, 34);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Обновить список";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.Location = new System.Drawing.Point(145, 43);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(136, 34);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Обновить список";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button4.Location = new System.Drawing.Point(287, 43);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(136, 34);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "Обновить список";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -195,39 +228,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 273F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(432, 408);
             this.tableLayoutPanel1.TabIndex = 6;
-            // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(3, 43);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(135, 34);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Обновить список";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(144, 43);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(135, 34);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Обновить список";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button4.Location = new System.Drawing.Point(285, 43);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(138, 34);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "Обновить список";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Form1
             // 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,6 +15,15 @@ namespace Lab1
 {
     class ApplicationViewModel : INotifyPropertyChanged
     {
+        private void editCategoriesList()
+        {
+            using (StreamWriter fs = File.CreateText("Categories.json"))
+            {
+                string json = JsonConvert.SerializeObject(Categories);
+                fs.Write(json);
+            }
+        }
+
         private notebookDBEntities1 db;
 
         private string _statusString { get; set; }
@@ -27,6 +37,7 @@ namespace Lab1
                 OnPropertyChanged("StatusString");
             }
         }
+
 
         private IEnumerable<Contacts> backupContactsList { get; set; }
 
@@ -205,6 +216,7 @@ namespace Lab1
                               Categories.Remove(selectedCategory);
                               StatusString = "Удаление категории успешно";
                               saveCategories();
+                              editCategoriesList();
                           }
                           catch (Exception ex)
                           {
@@ -238,6 +250,7 @@ namespace Lab1
                               Categories[i] = textCategory;
                               StatusString = "Изменение категории успешно";
                               saveCategories();
+                              editCategoriesList();
                           }
                           else
                           {
@@ -264,6 +277,7 @@ namespace Lab1
                       Categories.Add(textCategory);
                       StatusString = "Добавление успешно";
                       saveCategories();
+                      editCategoriesList();
                   }));
             }
         }
@@ -362,10 +376,10 @@ namespace Lab1
                 SelectedContact = new Contacts();
 
                 StatusString = "";
-
-                string bdPath = System.AppDomain.CurrentDomain.BaseDirectory;
-                string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={bdPath}notebookDB.mdf;Integrated Security=True;Connect Timeout=30";
-
+                //не менять!
+                string appPath = System.AppDomain.CurrentDomain.BaseDirectory;
+                string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={appPath}notebookDB.mdf;Integrated Security=True;Connect Timeout=30";
+                //не менять!
                 try
                 {
                     db = new notebookDBEntities1();
@@ -374,10 +388,9 @@ namespace Lab1
                     ContactsList = db.Contacts.Local.ToBindingList();
                     backupContactsList = new ObservableCollection<Contacts>(ContactsList);
                     Categories = new ObservableCollection<string>();
-                    Categories.Add("кат1");
-                    Categories.Add("кат2");
-                    Categories.Add("кат3");
-                    Categories.Add("кат4");
+                    //не менять!
+                    Categories = JsonConvert.DeserializeObject<ObservableCollection<string>>(File.ReadAllText(appPath+ "Categories.json"));
+                   
                 }
                 catch(Exception ex)
                 {
