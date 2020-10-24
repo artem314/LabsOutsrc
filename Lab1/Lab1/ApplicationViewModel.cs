@@ -189,6 +189,7 @@ namespace Lab1
 
                           db.Contacts.Load();
                           ContactsList = db.Contacts.Local.ToBindingList();
+                          backupContactsList = ContactsList;
 
                           StatusString = "Добавление успешно";
 
