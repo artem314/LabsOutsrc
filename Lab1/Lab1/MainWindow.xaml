@@ -97,7 +97,7 @@
                     <Button Command="{Binding addContactCommand}" Content="Добавить" Margin ="5,0,10,10" VerticalAlignment="Top" />
                     <Button Command="{Binding editContactCommand}" Content="Редактировать" Margin="10,0,10,10" VerticalAlignment="Top" />
                     <Button Command="{Binding deleteContactCommand}" CommandParameter="{Binding SelectedContact}" Content="Удалить" Margin="10,0,10,0" VerticalAlignment="Top" />
-                    <TextBlock Text="{Binding StatusString}" HorizontalAlignment="Left" Margin="5,0,0,91" Grid.Row="1" TextWrapping="Wrap" Width="134"/>
+                    <TextBlock Text="{Binding StatusString}" HorizontalAlignment="Left" Margin="5,0,0,10" Grid.Row="1" TextWrapping="Wrap" Width="134"/>
                 </DockPanel>
 
             </Grid>
