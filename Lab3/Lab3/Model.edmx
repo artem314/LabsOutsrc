@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ProductsDbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplier_id" Type="int" />
+          <Property Name="FIO" Type="nchar" MaxLength="10" />
+          <Property Name="company" Type="nchar" MaxLength="10" />
+          <Property Name="phone" Type="nchar" MaxLength="10" />
+          <Property Name="acountant" Type="nchar" MaxLength="10" />
+          <Property Name="address" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_group" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="group" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="packing" Type="nvarchar" MaxLength="100" />
+          <Property Name="price" Type="float" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplier_id" Type="int" />
+          <Property Name="group_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="date" Type="date" />
+          <Property Name="amount" Type="nvarchar" MaxLength="100" />
+          <Property Name="sum" Type="float" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplier_id" Type="int" />
+          <Property Name="group_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="date" Type="date" />
+          <Property Name="amount" Type="nchar" MaxLength="10" />
+          <Property Name="sum" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="100" />
+          <Property Name="company" Type="nvarchar" MaxLength="100" />
+          <Property Name="phone" Type="nvarchar" MaxLength="100" />
+          <Property Name="accountant" Type="nvarchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Customers_ToTable">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ToTable">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_ToTable">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_ToTable_1">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_ToTable_2">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_ToTable">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_ToTable_1">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_ToTable_2">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ProductsDbModelContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customers_ToTable" Association="Self.FK_Customers_ToTable">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ToTable" Association="Self.FK_Products_ToTable">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_ToTable" Association="Self.FK_Purchase_ToTable">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_ToTable_1" Association="Self.FK_Purchase_ToTable_1">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_ToTable_2" Association="Self.FK_Purchase_ToTable_2">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_ToTable" Association="Self.FK_Sales_ToTable">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_ToTable_1" Association="Self.FK_Sales_ToTable_1">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_ToTable_2" Association="Self.FK_Sales_ToTable_2">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProductsDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplier_id" Type="Int32" />
+          <Property Name="FIO" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="company" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="acountant" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Customers_ToTable" FromRole="Customers" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_group" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_ToTable" FromRole="Groups" ToRole="Products" />
+          <NavigationProperty Name="Purchase" Relationship="Self.FK_Purchase_ToTable_1" FromRole="Groups" ToRole="Purchase" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_ToTable_1" FromRole="Groups" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="group" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="packing" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Double" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Products_ToTable" FromRole="Products" ToRole="Groups" />
+          <NavigationProperty Name="Purchase" Relationship="Self.FK_Purchase_ToTable_2" FromRole="Products" ToRole="Purchase" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_ToTable_2" FromRole="Products" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplier_id" Type="Int32" />
+          <Property Name="group_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="amount" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sum" Type="Double" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Purchase_ToTable_1" FromRole="Purchase" ToRole="Groups" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Purchase_ToTable_2" FromRole="Purchase" ToRole="Products" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Purchase_ToTable" FromRole="Purchase" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplier_id" Type="Int32" />
+          <Property Name="group_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="amount" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="sum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Sales_ToTable_1" FromRole="Sales" ToRole="Groups" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Sales_ToTable_2" FromRole="Sales" ToRole="Products" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Sales_ToTable" FromRole="Sales" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="company" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="accountant" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_ToTable" FromRole="Suppliers" ToRole="Customers" />
+          <NavigationProperty Name="Purchase" Relationship="Self.FK_Purchase_ToTable" FromRole="Suppliers" ToRole="Purchase" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_ToTable" FromRole="Suppliers" ToRole="Sales" />
+        </EntityType>
+        <Association Name="FK_Customers_ToTable">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ToTable">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_ToTable_1">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_ToTable_1">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_ToTable_2">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_ToTable_2">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purchase_ToTable">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_ToTable">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductsDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Purchase" EntityType="Self.Purchase" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+          <AssociationSet Name="FK_Customers_ToTable" Association="Self.FK_Customers_ToTable">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ToTable" Association="Self.FK_Products_ToTable">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_ToTable_1" Association="Self.FK_Purchase_ToTable_1">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_ToTable_1" Association="Self.FK_Sales_ToTable_1">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_ToTable_2" Association="Self.FK_Purchase_ToTable_2">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_ToTable_2" Association="Self.FK_Sales_ToTable_2">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purchase_ToTable" Association="Self.FK_Purchase_ToTable">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_ToTable" Association="Self.FK_Sales_ToTable">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ProductsDbModelContainer" CdmEntityContainer="ProductsDbEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ProductsDbModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="acountant" ColumnName="acountant" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="ProductsDbModel.Groups">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="product_group" ColumnName="product_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ProductsDbModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="group" ColumnName="group" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="packing" ColumnName="packing" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purchase">
+            <EntityTypeMapping TypeName="ProductsDbModel.Purchase">
+              <MappingFragment StoreEntitySet="Purchase">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="ProductsDbModel.Sales">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ProductsDbModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="accountant" ColumnName="accountant" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
