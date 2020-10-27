@@ -159,7 +159,7 @@ namespace Lab3
                       if (SQL1 != null && SQL4 != null)
                       {
                           string sqlQuery = SQL1 + " " + SQL2 + " " + SQL3 + " " + SQL4 + " " + SQLUPD1 + " " + SQLUPD2 + " " + SQL5 + " " + SQL6 + " " + SQL7 + " '" + SQL8 + "' ";
-
+                          if(SQL1 == "INSERT INTO")  sqlQuery = SQL1 + " " + SQL2 + " " + SQL3 + " " + SQL4 + " " + SQLUPD1 + " " + SQLUPD2 + " " + SQL5 + " " + SQL6 + " " + SQL7 + " " + SQL8 + " ";
                           TableData = databaseAdapter.executeSQL(sqlQuery, SQL4.ToString());
                           queryText = databaseAdapter.getCurrentQuery();
                       }
