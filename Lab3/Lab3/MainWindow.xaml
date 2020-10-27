@@ -1,16 +1,16 @@
-﻿<Window x:Class="Lab4.MainWindow"
+﻿<Window x:Class="Lab3.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Lab4"
+        xmlns:local="clr-namespace:Lab3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="522.473" Width="873.885">
+        Title="MainWindow" Height="475.173" Width="888.751">
 
     <StackPanel>
 
         <Menu DockPanel.Dock="Top">
-            <MenuItem Command="{Binding ConnectCommand}" Header="Подключиться" Height="28" Click="MenuItem_Click" />
+            <MenuItem Command="{Binding ConnectCommand}" Header="Подключиться" Height="28" />
             <MenuItem Command="{Binding EditCommand}" Header="Таблицы" Height="28" >
                 <MenuItem Header="Кинотеатры" Command="{Binding ShowCinemasCommand}"/>
                 <MenuItem Header="Фильмы" Command="{Binding ShowMoviesCommand}"/>
@@ -24,74 +24,50 @@
         <Grid Margin="0,0,10,0" Height="468">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="283*"/>
+                <ColumnDefinition Width="145*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Margin="10,10,140,10" Orientation="Vertical"  Grid.Column="0">
+            <StackPanel Margin="10,10,0,10" Orientation="Vertical"  Grid.Column="0">
 
                 <TextBox x:Name="SQLQuery" Text="{Binding queryText}" TextWrapping="Wrap" Margin="10,5" Height="72"/>
-                <DockPanel Height="42" Margin="10,5">
-                    <TextBox Text="{Binding queryCondition}"  TextWrapping="Wrap" Width="307"/>
-                    <DatePicker SelectedDate="{Binding SelectedDate}"/>
-                </DockPanel>
                 <DataGrid SelectedItem="{Binding SelectedItemInTable}" ItemsSource="{Binding TableData, UpdateSourceTrigger=PropertyChanged}" Height="236" Margin="10,10,10,0"/>
                 <Button Command="{Binding GetFirstCommand}" Content="Первая запись" Margin="10,10,300,0"/>
                 <Button Command="{Binding GetLastCommand}" Content="Последняя запись" Margin="10,10,300,0"/>
             </StackPanel>
-
-            <StackPanel Margin="502,10,0,251">
-                <Button Command="{Binding ProductsByGroupsCommand}"  VerticalAlignment="Top" Margin="0,5,0,5" >
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Количества товаров по группам"/></TextBlock>
-                </Button>
-                <Button Command="{Binding SumBySuppliersCommand}"  VerticalAlignment="Top" Margin="0,5,0,5" >
-                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Суммы закупок по поставщикам"/></TextBlock>
-                </Button>
-
-                <Button Command="{Binding GetSumBySuppliersForDateCommand}"  VerticalAlignment="Top" Grid.Column="1"  Margin="0,5,0,5" >
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Сумма закупок по поставщикам и датам"/></TextBlock>
-                </Button>
-
-
-                <Button Command="{Binding GetSumByCustomersCommand}" VerticalAlignment="Top" Grid.Column="1"  Margin="0,5,0,5" >
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Суммы продаж по покупателям"/></TextBlock>
-                </Button>
-
-                <Button Command="{Binding GetMaxSalesByCustomerCommand}"  VerticalAlignment="Top" Grid.Column="1" Margin="0,5,0,5" >
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Width="140"><Run Text="Кинотеатры"/></TextBlock>
-                </Button>
-
-
+            <StackPanel  Margin="10,10,0,10" Orientation="Vertical"  Grid.Column="1">
+                <ComboBox x:Name="SQL1"  Margin="10,10,10,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120"  SelectedItem="{Binding SQL1ChangeCommand}" Text="{Binding SQL1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22" SelectionChanged="SQL1_SelectionChanged">
+                    <ListBoxItem Content="SELECT"/>
+                    <ListBoxItem Content="INSERT INTO"/>
+                    <ListBoxItem Content="UPDATE"/>
+                    <ListBoxItem Content="DELETE"/>
+                </ComboBox>
+                <TextBox x:Name="SQL2"  Margin="10,10,10,0" Height="23"  TextWrapping="Wrap" Text="{Binding SQL2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" HorizontalAlignment="Left"   />
+                <Label x:Name="SQL3"   Margin="10,10,10,0" Content="FROM" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="43"/>
+                <ComboBox x:Name="SQL4"  Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" SelectedIndex="0" Text="{Binding SQL4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="22">
+                    <ListBoxItem Content="Movies"/>
+                    <ListBoxItem Content="Cinema"/>
+                    <ListBoxItem Content="Details"/>
+                    <ListBoxItem Content="Reviews"/>
+                </ComboBox>
+                <Label x:Name="SQLUPD1"  Margin="10,10,0,0" HorizontalAlignment="Left" Content="{Binding SQLUPD1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Height="26" Width="49" Visibility="Hidden"/>
+                <TextBox x:Name="SQLUPD2"  Margin="10,10,0,0" Height="23"  TextWrapping="Wrap" Text="{Binding SQLUPD2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="260" HorizontalAlignment="Left" Visibility="Hidden"   />
+                <Label x:Name="SQL5"  Margin="10,10,10,0" Content="WHERE"  HorizontalAlignment="Left"  VerticalAlignment="Top" Height="26" Width="49"/>
+                <ComboBox x:Name="SQL6"  Margin="10,10,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="260" SelectedIndex="0" Text="{Binding SQL6}" Height="22">
+                    <ListBoxItem Content="Id"/>
+                    <ListBoxItem Content="Name"/>
+                    <ListBoxItem Content="Rating"/>
+                </ComboBox>
+                <ComboBox x:Name="SQL7"  Margin="10,10,0,0" HorizontalAlignment="Left" Width="260" SelectedIndex="0" Text="{Binding SQL7}" Height="22">
+                    <ListBoxItem Content="="/>
+                    <ListBoxItem Content="&gt;"/>
+                    <ListBoxItem Content="&lt;"/>
+                    <ListBoxItem Content="LIKE"/>
+                    <ListBoxItem Content="&lt;&gt;"/>
+                </ComboBox>
+                <TextBox x:Name="SQL8"  Margin="10,10,0,0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding SQL8, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="260"/>
+                <Button Content="Выполнить"  Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Command="{Binding executeSQLCommand}" Height="20"/>
             </StackPanel>
-            <TextBox x:Name="SQL2" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,67,0,0" TextWrapping="Wrap" Text="{Binding SQL2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" />
-            <ComboBox x:Name="SQL1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Text="{Binding SQL1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ListBoxItem Content="SELECT"/>
-                <ListBoxItem Content="UPDATE"/>
-                <ListBoxItem Content="DELETE"/>
-            </ComboBox>
-            <TextBox x:Name="SQL8" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,256,0,0" TextWrapping="Wrap" Text="{Binding SQL8, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
-            <Label x:Name="SQL5" Content="WHERE" Grid.Column="1" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.053,0.038"/>
-            <ComboBox x:Name="SQL6" Grid.Column="1" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Text="{Binding SQL6}">
-                <ListBoxItem Content="Id"/>
-                <ListBoxItem Content="Name"/>
-                <ListBoxItem Content="Rating"/>
-            </ComboBox>
-            <ComboBox x:Name="SQL7" Grid.Column="1" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Text="{Binding SQL7}">
-                <ListBoxItem Content="="/>
-                <ListBoxItem Content="&gt;"/>
-                <ListBoxItem Content="&lt;"/>
-                <ListBoxItem Content="LIKE"/>
-                <ListBoxItem Content="&lt;&gt;"/>
-            </ComboBox>
-            <ComboBox x:Name="SQL4" Grid.Column="1" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Text="{Binding SQL4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ListBoxItem Content="Movies"/>
-                <ListBoxItem Content="Cinema"/>
-                <ListBoxItem Content="Details"/>
-                <ListBoxItem Content="Reviews"/>
-            </ComboBox>
-            <Label x:Name="SQL3" Content="FROM" Grid.Column="1" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.053,0.038"/>
-            <Button x:Name="SQLExecuteBtn" Content="Выполнить" Grid.Column="1" HorizontalAlignment="Left" Margin="129,298,0,0" VerticalAlignment="Top" Width="75" Click="SQLExecuteBtn_Click" Command="{Binding executeSQLCommand}"/>
-
         </Grid>
 
     </StackPanel>

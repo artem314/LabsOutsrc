@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Windows.Controls;
 
-namespace Lab4
+namespace Lab3
 {
     public class ApplicationViewModel : INotifyPropertyChanged
     {
@@ -20,6 +21,9 @@ namespace Lab4
                   (_connectCommand = new RelayCommand(obj =>
                   {
                       databaseAdapter.GetInstance();
+                      SQL1 = "SELECT";
+                      SQL2 = "*";
+
                   }));
             }
         }
@@ -106,7 +110,7 @@ namespace Lab4
                   (_closeCommand = new RelayCommand(obj =>
                   {
                       databaseAdapter.CloseConnection();
-                      App.Current.MainWindow.Close();
+                      System.Windows.Application.Current.MainWindow.Close();
                   }));
             }
         }
@@ -149,76 +153,69 @@ namespace Lab4
         {
             get
             {
-                if (SQL1 != null && SQL4 != null)
-                {
-                    string sqlQuery = SQL1 + " " + SQL2 + " " + SQL3 + " " + SQL4 + " " + SQL5 + " " + SQL6 + " " + SQL7 + " " + SQL8 + " ";
-
-                    databaseAdapter.executeSQL(sqlQuery, SQL4.ToString());
-                    return _executeSQLCommand ??
-                      (_executeSQLCommand = new RelayCommand(obj =>
+                return _executeSQLCommand ??
+                  (_executeSQLCommand = new RelayCommand(obj =>
+                  {
+                      if (SQL1 != null && SQL4 != null)
                       {
+                          string sqlQuery = SQL1 + " " + SQL2 + " " + SQL3 + " " + SQL4 + " " + SQLUPD1 + " " + SQLUPD2 + " " + SQL5 + " " + SQL6 + " " + SQL7 + " '" + SQL8 + "' ";
+
                           TableData = databaseAdapter.executeSQL(sqlQuery, SQL4.ToString());
                           queryText = databaseAdapter.getCurrentQuery();
-                      }));
+                      }
+                  }));
+
+            }
+        }
+
+        private string _SQL1ChangeCommand;
+
+        public string SQL1ChangeCommand
+        {
+
+            get { return _SQL1ChangeCommand; }
+            set
+            {
+
+                string selectedItem = value;
+                if (selectedItem == "System.Windows.Controls.ListBoxItem: INSERT INTO")
+                {
+                    SQLUPD2 = "";
+                    SQLUPD1 = "";
+                    SQL2 = "";
+                    SQL3 = "";
+                    SQL5 = "VALUES";
+                    SQL8 = "(value1, value2, value3, ...)";
                 }
-                return null;
-            }
-        }
-
-        private RelayCommand _productsByGroupsCommand;
-        public RelayCommand ProductsByGroupsCommand
-        {
-            get
-            {
-                return _productsByGroupsCommand ??
-                  (_productsByGroupsCommand = new RelayCommand(obj =>
-                  {
-                      TableData = databaseAdapter.getProductsByGroups(queryCondition);
-                      queryText = databaseAdapter.getCurrentQuery();
-                  }));
-            }
-        }
-
-        private RelayCommand _sumBySuppliersCommand;
-        public RelayCommand SumBySuppliersCommand
-        {
-            get
-            {
-                return _sumBySuppliersCommand ??
-                  (_sumBySuppliersCommand = new RelayCommand(obj =>
-                  {
-                      TableData = databaseAdapter.getSumBySuppliers(queryCondition);
-                      queryText = databaseAdapter.getCurrentQuery();
-                  }));
-            }
-        }
-
-        private RelayCommand _getSumBySuppliersForDateCommand;
-        public RelayCommand GetSumBySuppliersForDateCommand
-        {
-            get
-            {
-                return _getSumBySuppliersForDateCommand ??
-                  (_getSumBySuppliersForDateCommand = new RelayCommand(obj =>
-                  {
-                      TableData = databaseAdapter.getSumBySuppliersForDate(queryCondition, SelectedDate);
-                      queryText = databaseAdapter.getCurrentQuery();
-                  }));
-            }
-        }
+                if (selectedItem == "System.Windows.Controls.ListBoxItem: SELECT" )
+                {
+                    SQLUPD2 = "";
+                    SQLUPD1 = "";
+                    SQL3 = "FROM";
+                    SQL5 = "WHERE";
+                    SQL8 = "1";
+                }
+                if (selectedItem == "System.Windows.Controls.ListBoxItem: DELETE")
+                {
+                    SQLUPD2 = "";
+                    SQLUPD1 = "";
+                    SQL2 = "";
+                    SQL3 = "FROM";
+                    SQL5 = "WHERE";
+                    SQL8 = "1";
+                }
+                if (selectedItem == "System.Windows.Controls.ListBoxItem: UPDATE")
+                {
+                    SQLUPD2 = "Name = 'Movie1'";
+                    SQLUPD1 = "SET";
+                    SQL2 = "";
+                    SQL3 = "";
+                    SQL5 = "WHERE";
+                    SQL8 = "1";
+                }
 
 
-        private RelayCommand _getSumByCustomersCommand;
-        public RelayCommand GetSumByCustomersCommand
-        {
-            get
-            {
-                return _getSumByCustomersCommand ??
-                  (_getSumByCustomersCommand = new RelayCommand(obj =>
-                  {
-                      TableData = databaseAdapter.getSumByCustomers(queryCondition);
-                      queryText = databaseAdapter.getCurrentQuery();
-                  }));
+                _SQL1ChangeCommand = value;
             }
         }
 
@@ -247,10 +244,32 @@ namespace Lab4
                 OnPropertyChanged("TableData");
             }
         }
+        public string _SQLUPD1 { get; set; }
 
-        public IEnumerable<string> _SQL1 { get; set; }
+        public string SQLUPD1
+        {
+            get { return _SQLUPD1; }
+            set
+            {
+                _SQLUPD1 = value;
+                OnPropertyChanged("SQLUPD1");
+            }
+        }
+        public string _SQLUPD2 { get; set; }
 
-        public IEnumerable<string> SQL1
+        public string SQLUPD2
+        {
+            get { return _SQLUPD2; }
+            set
+            {
+                _SQLUPD2 = value;
+                OnPropertyChanged("SQLUPD2");
+            }
+        }
+
+        public string _SQL1 { get; set; }
+
+        public string SQL1
         {
             get { return _SQL1; }
             set
@@ -260,9 +279,9 @@ namespace Lab4
             }
         }
 
-        public IEnumerable<string> _SQL2 { get; set; }
+        public string _SQL2 { get; set; }
 
-        public IEnumerable<string> SQL2
+        public string SQL2
         {
             get { return _SQL2; }
             set
@@ -273,9 +292,9 @@ namespace Lab4
         }
 
         public string SQL3 = "FROM";
-        public IEnumerable<string> _SQL4 { get; set; }
+        public string _SQL4 { get; set; }
 
-        public IEnumerable<string> SQL4
+        public string SQL4
         {
             get { return _SQL4; }
             set
@@ -289,9 +308,9 @@ namespace Lab4
         public string SQL5 = "WHERE";
 
 
-        public IEnumerable<string> _SQL6 { get; set; }
+        public string _SQL6 { get; set; }
 
-        public IEnumerable<string> SQL6
+        public string SQL6
         {
             get { return _SQL6; }
             set
@@ -301,9 +320,9 @@ namespace Lab4
             }
         }
 
-        public IEnumerable<string> _SQL7 { get; set; }
+        public string _SQL7 { get; set; }
 
-        public IEnumerable<string> SQL7
+        public string SQL7
         {
             get { return _SQL7; }
             set
@@ -313,9 +332,9 @@ namespace Lab4
             }
         }
 
-        public IEnumerable<string> _SQL8 { get; set; }
+        public string _SQL8 { get; set; }
 
-        public IEnumerable<string> SQL8
+        public string SQL8
         {
             get { return _SQL8; }
             set
@@ -372,8 +391,7 @@ namespace Lab4
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
