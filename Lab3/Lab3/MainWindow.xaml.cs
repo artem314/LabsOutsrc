@@ -24,6 +24,14 @@ namespace Lab3
 
                 SQL6.Visibility = Visibility.Hidden;
                 SQL7.Visibility = Visibility.Hidden;
+
+                SQL5.Content = "VALUES";
+
+                SQLUPD2.Text = "";
+                SQLUPD1.Content = "";
+                SQL2.Text = "";
+                SQL3.Content = "";
+                SQL8.Text = "(value1, value2, value3, ...)";
             }
             if (selectedItem == "System.Windows.Controls.ListBoxItem: SELECT")
             {
@@ -33,6 +41,12 @@ namespace Lab3
                 SQL3.Visibility = Visibility.Visible;
                 SQL6.Visibility = Visibility.Visible;
                 SQL7.Visibility = Visibility.Visible;
+
+                SQLUPD2.Text = "";
+                SQLUPD1.Content = "";
+                SQL3.Content = "FROM";
+                SQL5.Content = "WHERE";
+                SQL8.Text = "1";
 
                 SQL8.Text = "1";
             }
@@ -44,6 +58,13 @@ namespace Lab3
                 SQL3.Visibility = Visibility.Visible;
                 SQL6.Visibility = Visibility.Visible;
                 SQL7.Visibility = Visibility.Visible;
+
+                SQLUPD2.Text = "";
+                SQLUPD1.Content = "";
+                SQL2.Text = "";
+                SQL3.Content = "FROM";
+                SQL5.Content = "WHERE";
+                SQL8.Text = "1";
             }
             if (selectedItem == "System.Windows.Controls.ListBoxItem: UPDATE")
             {
@@ -53,6 +74,13 @@ namespace Lab3
                 SQL3.Visibility = Visibility.Hidden;
                 SQL6.Visibility = Visibility.Visible;
                 SQL7.Visibility = Visibility.Visible;
+
+                SQLUPD2.Text = "Name = 'Movie1'";
+                SQLUPD1.Content = "SET";
+                SQL2.Text = "";
+                SQL3.Content = "";
+                SQL5.Content = "WHERE";
+                SQL8.Text = "1";
             }
         }
     }
