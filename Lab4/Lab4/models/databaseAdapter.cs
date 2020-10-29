@@ -25,9 +25,8 @@ namespace Lab4
             if (_instance == null)
             {
                 string connectionString;
-                string workingDirectory = Environment.CurrentDirectory;
-                string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-                connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=" + projectDirectory + "\\ProductsDb.mdf;Integrated Security=True;Connect Timeout=30";
+                string appPath = System.AppDomain.CurrentDomain.BaseDirectory;
+                connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={appPath}ProductsDb.mdf;Integrated Security=True;Connect Timeout=30";
 
                 try
                 {
