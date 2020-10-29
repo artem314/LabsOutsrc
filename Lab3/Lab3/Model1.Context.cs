@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Lab4
+namespace Lab3
 {
     using System;
     using System.Data.Entity;

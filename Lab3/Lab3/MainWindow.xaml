@@ -30,7 +30,7 @@
 
             <StackPanel Margin="10,10,0,10" Orientation="Vertical"  Grid.Column="0">
 
-                <TextBox x:Name="SQLQuery" Text="{Binding queryText}" TextWrapping="Wrap" Margin="10,5" Height="72"/>
+                <TextBox x:Name="SQLQuery" Text="{Binding queryText}" TextWrapping="Wrap" Margin="10,5" Height="72" Visibility="Hidden"/>
                 <DataGrid SelectedItem="{Binding SelectedItemInTable}" ItemsSource="{Binding TableData, UpdateSourceTrigger=PropertyChanged}" Height="236" Margin="10,10,10,0"/>
                 <Button Command="{Binding GetFirstCommand}" Content="Первая запись" Margin="10,10,300,0"/>
                 <Button Command="{Binding GetLastCommand}" Content="Последняя запись" Margin="10,10,300,0"/>
